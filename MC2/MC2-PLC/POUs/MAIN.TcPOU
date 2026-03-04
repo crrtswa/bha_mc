@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{15633034-a0d2-44bd-a0e3-22c18de57c41}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	fbMC_Power1: MC_Power;
+	xEnable: BOOL;
+	xControlPower: BOOL;
+	fbMC_Power2: MC_Power;
+	lrAxis2_Override: LREAL;
+	fmMC_Reset1: MC_Reset;
+	xAxisReset: BOOL;
+	fmMC_Reset2: MC_Reset
+;
+	Axis: INT;
+	Execute: INT;
+	xMachineReset: BOOL;
+	fbMC_MoveRelative1: MC_MoveRelative;
+	xExecuteDistance: BOOL;
+	lrDistance: LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[GVL.Axis1.ReadStatus();
+GVL.Axis2.ReadStatus();
+
+IF xControlPower THEN
+	xEnable := TRUE;
+ELSE
+	xEnable := FALSE;
+END_IF
+fbMC_Power1(
+		Axis:= GVL.Axis1, 
+		Enable:= xEnable, 
+		Enable_Positive:= xEnable, 
+		Enable_Negative:= xEnable, 
+		Override:= 100.0 
+		);
+		
+fbMC_Power2(
+	Axis:= GVL.Axis2, 
+	Enable:= xEnable, 
+	Enable_Positive:= xEnable, 
+	Enable_Negative:= xEnable, 
+	Override:= lrAxis2_Override 
+	);
+	
+	IF xMachineReset THEN
+		xAxisReset := TRUE;
+	ELSE 
+		xAxisReset := FALSE;
+	END_IF
+	
+fbMC_MoveRelative1(
+	Axis:= GVL.Axis1, 
+	Execute:= xExecuteDistance, 
+	Distance:= lrDistance, 
+	Velocity:= 5.0 
+ );
+	
+	fmMC_Reset1(
+		Axis:= GVL.Axis1, 
+		Execute:= xAxisReset AND GVL.Axis1.Status.Error
+		);
+	fmMC_Reset2(
+		Axis:= GVL.Axis2, 
+		Execute:= xAxisReset AND GVL.Axis2.Status.Error
+		);
+		
+]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="2" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="10" Count="5" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="33" Count="5" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="68" Count="1" />
+      <LineId Id="73" Count="0" />
+      <LineId Id="90" Count="5" />
+      <LineId Id="85" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="48" Count="2" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="56" Count="2" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="70" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
