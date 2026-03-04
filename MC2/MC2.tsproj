@@ -1426,6 +1426,9 @@ External Setpoint Generation:
 	</DataTypes>
 	<Project ProjectGUID="{7ADCD1ED-EBF1-4B6C-BCB9-67587B456FD1}" Target64Bit="true" ShowHideConfigurations="#x6">
 		<System>
+			<Settings MaxCpus="3" NonWinCpus="1" Packages="2">
+				<Cpu CpuId="2"/>
+			</Settings>
 			<Tasks>
 				<Task Id="3" Priority="20" CycleTime="100000" AmsPort="350" AdtTasks="true">
 					<Name>PlcTask</Name>
@@ -1452,6 +1455,7 @@ External Setpoint Generation:
 				<Axis Id="1" CreateSymbols="true" AxisType="1">
 					<Name>Axis 1</Name>
 					<AxisPara>
+						<General UnitFlags="#x00000004"/>
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="1">
@@ -1762,5 +1766,9 @@ External Setpoint Generation:
 		<Plc>
 			<Project File="MC2-PLC.xti"/>
 		</Plc>
+		<Io/>
 	</Project>
+	<Mappings>
+		<MappingInfo Identifier="{05000010-2001-0850-1000-040300205008}" Id="#x02030010" Watchdog="14000000040000000400000004000000"/>
+	</Mappings>
 </TcSmProject>

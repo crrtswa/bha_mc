@@ -10,14 +10,28 @@ VAR
 	lrAxis2_Override: LREAL;
 	fmMC_Reset1: MC_Reset;
 	xAxisReset: BOOL;
-	fmMC_Reset2: MC_Reset
-;
+	fmMC_Reset2: MC_Reset;
 	Axis: INT;
 	Execute: INT;
 	xMachineReset: BOOL;
 	fbMC_MoveRelative1: MC_MoveRelative;
 	xExecuteDistance: BOOL;
-	lrDistance: LREAL;
+	lrDistance: LREAL := 10.0;
+	fbMC_MoveAbsolute1: MC_MoveAbsolute;
+	xExecuteMoveAbsolute1: BOOL;
+	lrPosition: LREAL;
+	fbMC_MoveVelocity1: MC_MoveVelocity;
+	xExecuteVelo: BOOL;
+	fbMC_Halt1: MC_Halt;
+	xExecuteHalt1: BOOL;
+	fbMC_Stop1: MC_Stop;
+	xExecuteStop1: BOOL;
+	fbMC_MoveMod: MC_MoveModulo;
+	xExecuteMoveMod1: BOOL;
+	lrPosMod: LREAL;
+	fb_MC_Jog_StandardSLow1: MC_Jog;
+	xJogFwdStandardSlow: BOOL;
+	xJogBckwdStandardSlow: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -58,11 +72,57 @@ fbMC_MoveRelative1(
 	Velocity:= 5.0 
  );
 	
-	fmMC_Reset1(
+fbMC_MoveAbsolute1(
+	Axis:= GVL.Axis1, 
+	Execute:= xExecuteMoveAbsolute1, 
+	Position:= lrPosition, 
+	Velocity:= 50.0 
+ );
+
+fbMC_MoveVelocity1(
+	Axis:= GVL.Axis1, 
+	Execute:= xExecuteVelo, 
+	Velocity:= 25, 
+	 );
+
+fbMC_Halt1(
+	Axis:= GVL.Axis1, 
+	Execute:= xExecuteHalt1 );
+
+fbMC_Stop1(
+	Axis:= GVL.Axis1, 
+	Execute:=  xExecuteStop1
+ );
+
+
+fbMC_MoveMod(
+	Axis:= GVL.Axis1, 
+	Execute:= xExecuteMoveMod1, 
+	Position:= lrPosMod, 
+	Velocity:= 25.0, 
+ 	Direction:= MC_Direction.MC_Positive_Direction
+ );
+
+E_JogMode.MC_JOGMODE_STANDARD_SLOW;
+E_JogMode.MC_JOGMODE_STANDARD_FAST;
+E_JogMode.MC_JOGMODE_CONTINOUS;
+E_JogMode.MC_JOGMODE_INCHING;
+E_JogMode.MC_JOGMODE_INCHING_MODULO;
+
+fb_MC_Jog_StandardSLow1(
+	Axis:= GVL.Axis1, 
+	JogForward:= xJogFwdStandardSlow,
+	JogBackwards:= xJogBckwdStandardSlow, 
+	Mode:= E_JogMode.MC_JOGMODE_STANDARD_SLOW 
+ );
+
+
+fmMC_Reset1(
 		Axis:= GVL.Axis1, 
 		Execute:= xAxisReset AND GVL.Axis1.Status.Error
 		);
-	fmMC_Reset2(
+	
+fmMC_Reset2(
 		Axis:= GVL.Axis2, 
 		Execute:= xAxisReset AND GVL.Axis2.Status.Error
 		);
@@ -91,9 +151,34 @@ fbMC_MoveRelative1(
       <LineId Id="90" Count="5" />
       <LineId Id="85" Count="0" />
       <LineId Id="64" Count="0" />
-      <LineId Id="48" Count="2" />
+      <LineId Id="116" Count="4" />
+      <LineId Id="114" Count="1" />
+      <LineId Id="190" Count="3" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="207" Count="0" />
+      <LineId Id="210" Count="2" />
+      <LineId Id="142" Count="0" />
+      <LineId Id="226" Count="1" />
+      <LineId Id="223" Count="0" />
+      <LineId Id="237" Count="0" />
+      <LineId Id="224" Count="0" />
+      <LineId Id="239" Count="0" />
+      <LineId Id="243" Count="4" />
+      <LineId Id="250" Count="0" />
+      <LineId Id="240" Count="1" />
+      <LineId Id="261" Count="0" />
+      <LineId Id="263" Count="3" />
+      <LineId Id="270" Count="0" />
+      <LineId Id="288" Count="4" />
+      <LineId Id="269" Count="0" />
+      <LineId Id="268" Count="0" />
+      <LineId Id="267" Count="0" />
+      <LineId Id="141" Count="0" />
+      <LineId Id="49" Count="1" />
       <LineId Id="46" Count="0" />
-      <LineId Id="56" Count="2" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="143" Count="0" />
+      <LineId Id="57" Count="1" />
       <LineId Id="55" Count="0" />
       <LineId Id="70" Count="1" />
     </LineIds>
